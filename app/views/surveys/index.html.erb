@@ -1,0 +1,11 @@
+<h1>Survey Builder</h1>
+
+<% if @surveys.first %>
+  <h2>Your surveys:</h2>
+
+  <ul>
+    <%= render @surveys %>
+  </ul>
+<% else %>
+  <%= link_to "Build Your First Survey", new_survey_path, class: "btn btn-primary btn-lg" %>
+<% end %>
