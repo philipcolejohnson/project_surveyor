@@ -1,20 +1,4 @@
 <h1>Design Your Survey</h1>
 
 
-<%= form_for @survey do |survey_fields| %>
-  <div class="form-group">
-  <%= survey_fields.label :title %>
-  <%= survey_fields.text_field :title, class: "form-control" %>
-  </div>
-  <br>
-  <div class="form-group">
-  <%= survey_fields.label :description %>
-  <%= survey_fields.text_area :description, maxlength: "250", cols: "50", rows: "5", class: "form-control" %>
-  </div>
-
-  <br>
-  <div class="form-group">
-  <%= survey_fields.submit %>
-  </div>
-
-<% end %>
+<%= render partial: "form", locals: { btn_label: "Create" } %>
