@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   def index
+    @survey = Survey.find(params[:survey_id])
     @question = Question.all
   end
 
@@ -10,10 +11,11 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    @survey = Survey.find(params[:survey_id])
     @question = Question.new(question_params)
-    if @question.save
+    if @question.save!
       flash[:success] = "Your question has been created!"
-      redirect_to @question
+      redirect_to @survey
     else
       flash.now[:danger] = "Your question could not be created :("
       render :new
@@ -21,14 +23,17 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @survey = Survey.find(params[:survey_id])
     @question = Question.find(params[:id])
   end
 
   def edit
+    @survey = Survey.find(params[:survey_id])
     @question = Question.find(params[:id])
   end
 
   def update
+    @survey = Survey.find(params[:survey_id])
     @question = Question.find(params[:id])
     if @question.update
       flash[:success] = "Your question has been updated!"
@@ -40,6 +45,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    @survey = Survey.find(params[:survey_id])
     @question = Question.find(params[:id])
     if @question.destroy
       flash[:success] = "Your question has been destroyed!"
@@ -52,6 +58,8 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:text, :type, :required)
+    p = params.require(:question).permit(:text, :type, :required)
+    p[:survey_id] = params[:survey_id]
+    p
   end
 end
