@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+.greyed-out {
+  color: #888;
+}

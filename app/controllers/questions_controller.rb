@@ -4,7 +4,9 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    @survey = Survey.find(params[:survey_id])
     @question = Question.new
+    @type = params[:type]
   end
 
   def create
