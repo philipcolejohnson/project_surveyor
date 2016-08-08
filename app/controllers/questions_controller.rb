@@ -7,12 +7,13 @@ class QuestionsController < ApplicationController
   def new
     @survey = Survey.find(params[:survey_id])
     @question = Question.new
-    @type = params[:type]
+    @type = params[:question_type]
   end
 
   def create
     @survey = Survey.find(params[:survey_id])
     @question = Question.new(question_params)
+
     if @question.save!
       flash[:success] = "Your question has been created!"
       redirect_to @survey
@@ -20,6 +21,11 @@ class QuestionsController < ApplicationController
       flash.now[:danger] = "Your question could not be created :("
       render :new
     end
+
+    Option.create_options_from_range(@question,
+                              min: params[:question][:min],
+                              max: params[:question][:max],
+                              step: params[:question][:step]) if @question.question_type == 1
   end
 
   def show
@@ -35,6 +41,7 @@ class QuestionsController < ApplicationController
   def update
     @survey = Survey.find(params[:survey_id])
     @question = Question.find(params[:id])
+
     if @question.update
       flash[:success] = "Your question has been updated!"
       redirect_to @question
@@ -48,7 +55,7 @@ class QuestionsController < ApplicationController
     @survey = Survey.find(params[:survey_id])
     @question = Question.find(params[:id])
     if @question.destroy
-      flash[:success] = "Your question has been destroyed!"
+      flash[:success] = "Your question has been deleted!"
       redirect_to @survey
     else
       render :show
@@ -58,7 +65,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    p = params.require(:question).permit(:text, :type, :required)
+    p = params.require(:question).permit(:text, :question_type, :required)
     p[:survey_id] = params[:survey_id]
     p
   end

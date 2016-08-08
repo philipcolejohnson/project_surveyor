@@ -1,7 +1,7 @@
 <h1>Title: <%= @survey.title %></h1>
 <h2>Description: <%= @survey.description %></h2>
-<%= link_to "Add Number Range Question", new_survey_question_path(@survey, type:"1"), class: "btn btn-success" %>
-<%= link_to "Add Multiple Choice Question", new_survey_question_path(@survey, type:"2"), class: "btn btn-success" %>
+<%= link_to "Add Number Range Question", new_survey_question_path(@survey, question_type:"1"), class: "btn btn-success" %>
+<%= link_to "Add Multiple Choice Question", new_survey_question_path(@survey, question_type:"2"), class: "btn btn-success" %>
 
 <h2>Questions</h2>
 <ul>

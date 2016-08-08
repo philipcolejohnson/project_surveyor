@@ -1,4 +1,4 @@
-<h3> Add a Number Range Question</h3>
+<h3> Add a Mutiple Choice Question</h3>
 
 <%= form_for [@survey, @question] do |question_fields| %>
   <div class="form-group">
@@ -7,18 +7,13 @@
   </div>
 
   <div class="form-group">
-    <%= question_fields.label :min, "What is the minimum range value?" %>
-    <input type="number" name="question[min]" class="form-control"  />
+    <%= question_fields.label :min, "How many answers will this question have?" %>
+    <input type="number" name="question[num_answers]" class="form-control"  />
   </div>
 
    <div class="form-group">
-    <%= question_fields.label :max, "What is the maximum range value?" %>
-    <input type="number" name="question[max]" class="form-control"  />
-  </div>
-
-  <div class="form-group">
-    <%= question_fields.label :step, "What is the step in your range?" %>
-    <input type="number" name="question[step]" class="form-control"  />
+    <%= question_fields.label :max, "How many options may be selected?" %>
+    <input type="number" name="question[num_options]" class="form-control"  />
   </div>
 
   <label>Is this question required?
@@ -34,6 +29,6 @@
 
   <%= question_fields.hidden_field :question_type, value: 1 %>
 
-  <%= question_fields.submit "Add Question", class: "btn btn-primary" %>
+  <%= question_fields.submit "Continue to the Next Step", class: "btn btn-primary" %>
 
   <% end %>
