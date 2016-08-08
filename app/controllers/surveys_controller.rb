@@ -29,7 +29,7 @@ class SurveysController < ApplicationController
 
   def update
     @survey = Survey.find(params[:id])
-    if @survey.update
+    if @survey.update(survey_params)
       flash[:success] = "Your survey has been updated!"
       redirect_to @survey
     else
@@ -37,7 +37,7 @@ class SurveysController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @survey = Survey.find(params[:id])
     if @survey.destroy

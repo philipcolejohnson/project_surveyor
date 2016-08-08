@@ -49,7 +49,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     if @question.destroy
       flash[:success] = "Your question has been destroyed!"
-      redirect_to questions_path
+      redirect_to @survey
     else
       render :show
     end

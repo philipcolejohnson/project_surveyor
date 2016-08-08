@@ -7,7 +7,7 @@
 <ul>
   <% @survey.questions.each do |question| %>
     <li>
-      <%= question.text %>
+      <%= question.text %> <%= link_to "Delete", url_for([@survey, question]), method: :delete, class: "btn btn-danger btn-xs" %>
     </li>
   <% end %>
 </ul>
