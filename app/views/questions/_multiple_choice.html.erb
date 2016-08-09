@@ -6,16 +6,24 @@
     <%= question_fields.text_field :text, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= question_fields.label :min, "How many answers will this question have?" %>
-    <input type="number" name="question[num_answers]" class="form-control"  />
-  </div>
+  <% if @question.options.empty? %>
+    <div class="form-group">
+      <%= question_fields.label :num_answers, "How many answers will this question have?" %>
+      <input type="number" name="question[num_answers]" class="form-control"  />
+    </div>
+  <% end %>
 
    <div class="form-group">
-    <%= question_fields.label :max, "How many options may be selected?" %>
-    <input type="number" name="question[num_options]" class="form-control"  />
+    <%= question_fields.label :num_options, "How many options may be selected?" %>
+    <div class="radio">
+      <input type="radio" name="question[num_options]" value = "One" %> One
+    </div>
+    <div class="radio">
+      <input type="radio" name="question[num_options]" value = "Multiple" %> Multiple
+    </div>
   </div>
 
+  <div class="form-group">
   <label>Is this question required?
     <div class="radio">
       <%= question_fields.radio_button :required, "Yes" %> Yes
@@ -25,9 +33,25 @@
     </div>
   </label>
 
+  <% unless @question.options.empty? %>
+    <h3>Edit Answer Choices</h3>
+    <%= question_fields.fields_for :options do |option_field| %>
+      <div class="form-group">
+        <%= option_field.text_field :text, class: "form-control" %>
+        <% if option_field.object.persisted? %>
+          <%= option_field.label :_destroy, "Delete this answer?" %>
+          <%= option_field.check_box :_destroy %>
+        <% end %>
+        <br>
+      </div>
+    <% end %>
+  <% end %>
+
+  </div>
+
   <br />
 
-  <%= question_fields.hidden_field :question_type, value: 1 %>
+  <%= question_fields.hidden_field :question_type, value: 2 %>
 
   <%= question_fields.submit "Continue to the Next Step", class: "btn btn-primary" %>
 

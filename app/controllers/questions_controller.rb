@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @survey = Survey.find(params[:survey_id])
+    @survey = Survey.includes(questions: :options).find(params[:survey_id])
     @question = Question.new
     @type = params[:question_type]
   end
@@ -16,7 +16,13 @@ class QuestionsController < ApplicationController
 
     if @question.save!
       flash[:success] = "Your question has been created!"
-      redirect_to @survey
+      if params[:question][:question_type] == "1"
+        redirect_to @survey
+      else
+        redirect_to edit_survey_question_path(@survey,
+                    @question,
+                    num_answers: params[:question][:num_answers])
+      end
     else
       flash.now[:danger] = "Your question could not be created :("
       render :new
@@ -29,22 +35,34 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @survey = Survey.find(params[:survey_id])
+    @survey = Survey.includes(questions: :options).find(params[:survey_id])
     @question = Question.find(params[:id])
   end
 
   def edit
-    @survey = Survey.find(params[:survey_id])
+    @survey = Survey.includes(questions: :options).find(params[:survey_id])
     @question = Question.find(params[:id])
+    @type = @question.question_type.to_s
+
+    if @type == "2"
+      (params[:num_answers].to_i + 1).times do
+        @question.options.build
+      end
+    end
   end
 
   def update
     @survey = Survey.find(params[:survey_id])
     @question = Question.find(params[:id])
 
-    if @question.update
+    Option.update_options_from_range(@question,
+                              min: params[:question][:min],
+                              max: params[:question][:max],
+                              step: params[:question][:step]) if @question.question_type == 1
+
+    if @question.update(question_params)
       flash[:success] = "Your question has been updated!"
-      redirect_to @question
+      redirect_to @survey
     else
       flash.now[:danger] = "Your question could not be updated :("
       render :edit
@@ -65,7 +83,14 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    p = params.require(:question).permit(:text, :question_type, :required)
+    p = params.require(:question).
+    permit(:text, :question_type, :required,
+          { options_attributes: [
+              :text,
+              :id,
+              :_destroy
+          ] } )
+
     p[:survey_id] = params[:survey_id]
     p
   end

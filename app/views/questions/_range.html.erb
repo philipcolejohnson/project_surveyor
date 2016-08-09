@@ -8,17 +8,17 @@
 
   <div class="form-group">
     <%= question_fields.label :min, "What is the minimum range value?" %>
-    <input type="number" name="question[min]" class="form-control"  />
+    <input type="number" name="question[min]" class="form-control" value="<%= @question.options.order("text ASC").first.text %>" />
   </div>
 
    <div class="form-group">
     <%= question_fields.label :max, "What is the maximum range value?" %>
-    <input type="number" name="question[max]" class="form-control"  />
+    <input type="number" name="question[max]" class="form-control" value="<%= @question.options.order("text ASC").last.text %>" />
   </div>
 
   <div class="form-group">
     <%= question_fields.label :step, "What is the step in your range?" %>
-    <input type="number" name="question[step]" class="form-control"  />
+    <input type="number" name="question[step]" class="form-control" value="<%= @question.options.order("text ASC").second.text.to_i - @question.options.order("text ASC").first.text.to_i %>" />
   </div>
 
   <label>Is this question required?

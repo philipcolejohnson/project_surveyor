@@ -20,7 +20,7 @@ class SurveysController < ApplicationController
   end
 
   def show
-    @survey = Survey.find(params[:id])
+    @survey = Survey.includes(questions: :options).find(params[:id])
   end
 
   def edit

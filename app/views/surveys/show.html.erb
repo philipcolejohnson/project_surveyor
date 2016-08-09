@@ -1,13 +1,7 @@
 <h1>Title: <%= @survey.title %></h1>
 <h2>Description: <%= @survey.description %></h2>
+
 <%= link_to "Add Number Range Question", new_survey_question_path(@survey, question_type:"1"), class: "btn btn-success" %>
 <%= link_to "Add Multiple Choice Question", new_survey_question_path(@survey, question_type:"2"), class: "btn btn-success" %>
 
-<h2>Questions</h2>
-<ul>
-  <% @survey.questions.each do |question| %>
-    <li>
-      <%= question.text %> <%= link_to "Delete", url_for([@survey, question]), method: :delete, class: "btn btn-danger btn-xs" %>
-    </li>
-  <% end %>
-</ul>
+<%= render "/shared/question_list" %>
