@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  submission: one
+  question: one
+  option: one
+
+two:
+  submission: two
+  question: two
+  option: two

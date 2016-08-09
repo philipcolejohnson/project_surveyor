@@ -1,0 +1,24 @@
+<h1>Title: <%= @survey.title %></h1>
+<h2>Description: <%= @survey.description %></h2>
+
+<%= form_tag "/submit_response", method: "post" do %>
+  <ol>
+    <% @questions.each do |question| %>
+      <li> <%= question.text %>
+      <br>
+      <% question.options.each do |option| %>
+        <label class="radio-inline">
+          <input type="radio" name="survey[<%= question.id %>]" value="<%= option.id %>" required >
+          <%= option.text %>
+        </label>
+        <br>
+      <% end %>
+    </li>
+    <br>
+    <% end %>
+  </ol>
+
+  <input type="hidden" name="survey_id" value="<%= @survey.id %>">
+
+  <%= submit_tag "Submit!", class: "btn btn-primary" %>
+<% end %>

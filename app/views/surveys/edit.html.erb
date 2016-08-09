@@ -2,3 +2,4 @@
 
 
 <%= render partial: "form", locals: { btn_label: "Update" } %>
+<%= link_to "Delete Survey", survey_path(@survey), class: "btn btn-danger", method: :delete %>

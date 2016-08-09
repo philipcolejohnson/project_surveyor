@@ -40,9 +40,13 @@ Options
 :text
 belongs_to: question
 
+Submissions
+:id
+:user
+:survey_id
+has_many :responses
 
-
-
-
-
-
+Responses
+belongs_to :submissions
+belongs_to :questions
+belongs_to :options

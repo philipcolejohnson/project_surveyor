@@ -1,6 +1,10 @@
 <li>
-  <%= survey.title %>
-  <%= link_to "View Survey", survey_path(survey), class: "btn btn-success btn-xs" %>
-  <%= link_to "Edit Survey", edit_survey_path(survey), class: "btn btn-primary btn-xs" %>
-  <%= link_to "Delete Survey", survey_path(survey), class: "btn btn-danger btn-xs", method: :delete %>
+  <%= survey.title %><br>
+  <% if survey.questions.count > 0 %>
+    <%= link_to "Take Survey", survey_questions_path(survey), class: "btn btn-primary btn-xs" %>
+  <% else %>
+    <%= link_to "Take Survey", survey_questions_path(survey), class: "btn btn-primary btn-xs disabled" %>
+  <% end %>
+  <%= link_to "Add Questions", survey_path(survey), class: "btn btn-success btn-xs" %>
+  <%= link_to "Edit/Delete Survey", edit_survey_path(survey), class: "btn btn-danger btn-xs" %>
 </li>

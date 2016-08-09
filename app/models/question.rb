@@ -5,4 +5,5 @@ class Question < ApplicationRecord
                                 :allow_destroy => :true
 
   belongs_to :survey, optional: true
+  has_many :responses
 end

@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   def index
-    @survey = Survey.find(params[:survey_id])
-    @question = Question.all
+    @survey = Survey.includes(questions: :options).find(params[:survey_id])
+    @questions = @survey.questions
   end
 
   def new
@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
     @survey = Survey.find(params[:survey_id])
     @question = Question.new(question_params)
 
-    if @question.save!
+    if @question.save
       flash[:success] = "Your question has been created!"
       if params[:question][:question_type] == "1"
         redirect_to @survey

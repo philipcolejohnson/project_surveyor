@@ -1,5 +1,6 @@
 class Option < ApplicationRecord
   belongs_to :question
+  has_many :responses
 
   def self.create_options_from_range(question, min:, max:, step: 1)
     min = min.to_i
@@ -35,7 +36,7 @@ class Option < ApplicationRecord
     question_options.each do |option|
       option.destroy if option.text.to_i < min || option.text.to_i > max
     end
-    
+
   end
 
 end

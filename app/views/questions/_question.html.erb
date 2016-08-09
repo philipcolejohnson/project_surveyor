@@ -1,0 +1,20 @@
+<li>
+  <%= question.text %>
+  <br>
+  <%= f.fields_for question do |question_fields| %>
+      <%= question_fields.collection_radio_buttons(
+            :option_ids,
+            question.options,
+            :id,
+            :text
+          ) do |item|
+              item.label(class: "radio-inline") do
+                item.radio_button +
+                item.text
+              end + "<br>".html_safe
+
+          end
+      %>
+  <% end %>
+</li>
+<br>
