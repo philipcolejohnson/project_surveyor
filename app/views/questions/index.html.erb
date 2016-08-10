@@ -4,11 +4,11 @@
 <%= form_tag "/submit_response", method: "post" do %>
   <ol>
     <% @questions.each do |question| %>
-      <li> <%= question.text %>
+      <li> <%= question.text %> <%= "*" if question.required == true %>
       <br>
       <% question.options.each do |option| %>
         <label class="radio-inline">
-          <input type="radio" name="survey[<%= question.id %>]" value="<%= option.id %>" required >
+          <input type="radio" name="survey[<%= question.id %>]" value="<%= option.id %>" <%= "required" if question.required == true %> >
           <%= option.text %>
         </label>
         <br>

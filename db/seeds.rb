@@ -18,7 +18,7 @@ puts "#{Survey.count} surveys created."
 Survey.all.each do |survey|
   # range questions
   2.times do
-    q = Question.create!(question_type: 1, text: Faker::StarWars.quote[0..-2] + "?", required: false, survey_id: survey.id)
+    q = Question.create!(question_type: 1, text: Faker::StarWars.quote[0..-2] + "?", required: true, survey_id: survey.id)
     4.times do |count|
       Option.create!(text: count + 1, question_id: q.id)
     end
